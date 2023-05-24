@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
-import { provideFunctions,getFunctions } from '@angular/fire/functions';
+import { provideFunctions,getFunctions, connectFunctionsEmulator, Functions } from '@angular/fire/functions';
 
 @NgModule({
   declarations: [
@@ -17,7 +17,16 @@ import { provideFunctions,getFunctions } from '@angular/fire/functions';
     AppRoutingModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideFirestore(() => getFirestore()),
-    provideFunctions(() => getFunctions())
+    provideFunctions(() => {
+      const functions: Functions = getFunctions();
+
+      if (!environment.production) {
+        connectFunctionsEmulator(functions, '127.0.0.1', 5001);
+      }
+
+
+      return functions;
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]
