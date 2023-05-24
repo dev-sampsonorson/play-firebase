@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { Functions, httpsCallable } from '@angular/fire/functions';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  private functions: Functions = inject(Functions);
+  private generateImage = httpsCallable(this.functions, 'generateImage');
 
+  generateNewImage(query: string): void {
+    this.generateImage({ query }).then(result => {
+      console.log(result);
+    })
+  }
 }

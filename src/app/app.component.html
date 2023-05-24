@@ -3,8 +3,8 @@
     <h1 class="text-5xl">Manchester United</h1>
     <span>is that good, they would even win...</span>
     <div class="mt-5 flex">
-      <input class="w-full mr-5 p-2 rounded-lg text-black pl-4" type="text" />
-      <button class="bg-blue-600 text-white rounded-lg p-3 cursor-pointer">Generate</button>
+      <input #input class="w-full mr-5 p-2 rounded-lg text-black pl-4" type="text" />
+      <button (click)="generateNewImage(input.value)" class="bg-blue-600 text-white rounded-lg p-3 cursor-pointer">Generate</button>
     </div>
   </div>
 </div>
