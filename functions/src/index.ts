@@ -13,7 +13,14 @@ import * as logger from 'firebase-functions/logger';
 // Start writing functions
 // https://firebase.google.com/docs/functions/typescript
 
-export const helloWorld = onRequest((request, response) => {
+export const generateImage = onRequest((request, response) => {
+  const { query } = request.body.data;
   logger.info('Hello logs!', { structuredData: true });
-  response.send('Hello from Firebase!');
+  response
+    .status(200)
+    .json({
+      data: {
+        foo: `You typed ${query}`,
+      },
+    });
 });

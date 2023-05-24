@@ -21,7 +21,7 @@ import { provideFunctions,getFunctions, connectFunctionsEmulator, Functions } fr
       const functions: Functions = getFunctions();
 
       if (!environment.production) {
-        connectFunctionsEmulator(functions, '127.0.0.1', 5001);
+        connectFunctionsEmulator(functions, 'localhost', 5001);
       }
 
 

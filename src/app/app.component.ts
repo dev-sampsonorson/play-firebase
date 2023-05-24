@@ -8,11 +8,11 @@ import { Functions, httpsCallable } from '@angular/fire/functions';
 })
 export class AppComponent {
   private functions: Functions = inject(Functions);
-  private generateImage = httpsCallable(this.functions, 'generateImage');
+  private generateImage = httpsCallable<{ query: string }, { foo: string }>(this.functions, 'generateImage');
 
   generateNewImage(query: string): void {
     this.generateImage({ query }).then(result => {
-      console.log(result);
+      console.log('result => ', result.data.foo);
     })
   }
 }
