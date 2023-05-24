@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "play-firebase-8447a": {
+      "hosting": {
+        "play-firebase": [
+          "play-firebase-8447a"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "play-firebase-8447a"
+  }
+}
