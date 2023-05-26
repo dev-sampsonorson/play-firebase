@@ -1,4 +1,4 @@
-<div class="flex justify-center mt-28">
+<div class="flex items-center mt-28 flex-col">
   <div class="border-2 border-white rounded-lg container md-auto p-10 text-white flex-col">
     <h1 class="text-5xl">Manchester United</h1>
     <span>is that good, they would even win...</span>
@@ -6,5 +6,8 @@
       <input #input class="w-full mr-5 p-2 rounded-lg text-black pl-4" type="text" />
       <button (click)="generateNewImage(input.value)" class="bg-blue-600 text-white rounded-lg p-3 cursor-pointer">Generate</button>
     </div>
+  </div>
+  <div class="mt-12 mb-12 container md-auto">
+    <img *ngIf="imageUrl" [src]="imageUrl" class="rounded-lg w-full aspect-video object-cover" alt="Manchester United Badge">
   </div>
 </div>

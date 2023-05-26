@@ -1,26 +1,34 @@
-/**
- * Import function triggers from their respective submodules:
- *
- * import {onCall} from "firebase-functions/v2/https";
- * import {onDocumentWritten} from "firebase-functions/v2/firestore";
- *
- * See a full list of supported triggers at https://firebase.google.com/docs/functions
- */
-
 import { onRequest } from 'firebase-functions/v2/https';
-import * as logger from 'firebase-functions/logger';
+import { Configuration, OpenAIApi } from 'openai';
+import { getImagePrompt } from './image-prompt';
 
-// Start writing functions
-// https://firebase.google.com/docs/functions/typescript
-
-export const generateImage = onRequest((request, response) => {
-  const { query } = request.body.data;
-  logger.info('Hello logs!', { structuredData: true });
-  response
-    .status(200)
-    .json({
-      data: {
-        foo: `You typed ${query}`,
-      },
+const configuration = new Configuration({
+  organization: process.env.ORGANIZATION_ID,
+  apiKey: process.env.OPENAI_API_KEY,
+});
+const openai = new OpenAIApi(configuration);
+export const generateImage = onRequest(async (request, response) => {
+  try {
+    const { query } = request.body.data;
+    const { data: responseData } = await openai.createImage({
+      prompt: getImagePrompt(query),
+      n: 2,
+      size: '1024x1024',
     });
+
+    console.log('responseData => ', responseData);
+    response
+      .status(200)
+      .json({
+        data: responseData.data,
+      });
+  } catch (e: any) {
+    const { code = undefined, message = undefined } = e.response.data.error;
+
+    response
+      .status(500)
+      .json({
+        data: { code, message },
+      });
+  }
 });
